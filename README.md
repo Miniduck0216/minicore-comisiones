@@ -2,7 +2,7 @@
 
 Aplicación web que calcula la comisión de cada vendedor según el total que vendió dentro de un rango de fechas. Está hecha con el patrón **Modelo – Vista – Controlador**.
 
-- **Deploy:** _(pegar aquí el link de Render)_
+- **Deploy:** _https://minicore-comisiones-h2k0.onrender.com_
 - **Video:** _(pegar aquí el link del video)_
 
 ## Tecnologías
