@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block contenido %}
+<section class="tarjeta">
+  <h2>Calcular comisiones por rango de fechas</h2>
+  <form method="get" action="/">
+    <label>Desde
+      <input type="date" name="desde" value="{{ desde }}">
+    </label>
+    <label>Hasta
+      <input type="date" name="hasta" value="{{ hasta }}">
+    </label>
+    <button type="submit">Calcular</button>
+  </form>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+</section>
+
+{% if resultados is not none %}
+<section class="tarjeta">
+  <h2>Resultado del {{ desde }} al {{ hasta }}</h2>
+  <table>
+    <thead>
+      <tr><th>Vendedor</th><th>Total vendido</th><th>% aplicado</th><th>Comisión</th></tr>
+    </thead>
+    <tbody>
+      {% for r in resultados %}
+      <tr>
+        <td>{{ r.vendedor }}</td>
+        <td>${{ "%.2f"|format(r.total_ventas) }}</td>
+        <td>{{ (r.porcentaje * 100)|round|int }}%</td>
+        <td>${{ "%.2f"|format(r.comision) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    <tfoot>
+      <tr><td colspan="3">Total a pagar</td><td>${{ "%.2f"|format(total_comisiones) }}</td></tr>
+    </tfoot>
+  </table>
+</section>
+{% endif %}
+
+<section class="tarjeta">
+  <h2>Reglas de comisión</h2>
+  <table>
+    <thead><tr><th>Ventas desde</th><th>Porcentaje</th></tr></thead>
+    <tbody>
+      {% for regla in reglas %}
+      <tr><td>${{ "%.2f"|format(regla.monto_minimo) }}</td><td>{{ (regla.porcentaje * 100)|round|int }}%</td></tr>
+      {% endfor %}
+      <tr><td>Menos de ${{ "%.2f"|format(reglas[-1].monto_minimo) }}</td><td>0%</td></tr>
+    </tbody>
+  </table>
+</section>
+{% endblock %}
